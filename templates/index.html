@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Price Forecast</title>
+
+    <!-- Flask CSS Linking -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- ⚡ Background Effects -->
+<div class="lightning"></div>
+<div class="grid"></div>
+<div class="sparks"></div>
+<div class="particles"></div>
+
+<div class="container">
+
+    <h1>⚡ Short Term Electricity Price Forecast</h1>
+    <p class="subtitle">AI-powered energy decision dashboard for prosumers</p>
+
+    <!-- 🔹 KPI CARDS -->
+    <div class="kpi-container">
+
+        <div class="card kpi-card">
+            <h3>💰 Current Price</h3>
+            <p id="currentPrice">-- ₹</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>📈 Trend</h3>
+            <p id="priceTrend">--</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>⏱ Peak Time</h3>
+            <p id="peakTime">--</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>📉 Lowest Time</h3>
+            <p id="lowTime">--</p>
+        </div>
+
+    </div>
+
+    <!-- 🔹 INPUT FORM -->
+    <div class="card form-card">
+
+        <div class="form-group">
+            <label>Select Date</label>
+            <input type="date" id="date">
+        </div>
+
+        <div class="form-group">
+            <label>Horizon (Hours)</label>
+            <input type="number" id="horizon" value="24" min="1" max="48">
+        </div>
+
+        <button onclick="predict()">⚡ Predict</button>
+
+    </div>
+
+    <!-- 🔹 WEATHER SECTION -->
+    <div class="weather-container">
+
+        <div class="card weather-card">
+            <h3>🌡 Temperature</h3>
+            <p id="temp">-- °C</p>
+        </div>
+
+        <div class="card weather-card">
+            <h3>☀️ Solar</h3>
+            <p id="solar">-- W/m²</p>
+        </div>
+
+        <div class="card weather-card">
+            <h3>💨 Wind</h3>
+            <p id="wind">-- km/h</p>
+        </div>
+
+        <div class="card weather-card">
+            <h3>💧 Humidity</h3>
+            <p id="humidity">-- %</p>
+        </div>
+
+    </div>
+
+    <!-- 🔹 MAIN GRAPH -->
+    <div class="card chart-card">
+        <canvas id="priceChart"></canvas>
+    </div>
+
+    <div class="card">
+        <canvas id="demandChart"></canvas>
+    </div>
+
+    <!-- 🔹 DEMAND / SUPPLY -->
+    <div class="grid-container">
+
+        <div class="card">
+            <h3>⚡ Demand</h3>
+            <p id="demand">-- MW</p>
+        </div>
+
+        <div class="card">
+            <h3>🔌 Supply</h3>
+            <p id="supply">-- MW</p>
+        </div>
+
+        <div class="card">
+            <h3>⚖ Gap</h3>
+            <p id="gap">--</p>
+        </div>
+
+    </div>
+
+    <!-- 🔹 PROSUMER DATA -->
+    <div class="grid-container">
+
+        <div class="card">
+            <h3>🏠 Consumption</h3>
+            <p id="consumption">-- kWh</p>
+        </div>
+
+        <div class="card">
+            <h3>☀️ Generation</h3>
+            <p id="generation">-- kWh</p>
+        </div>
+
+        <div class="card">
+            <h3>🔋 Battery</h3>
+            <p id="battery">-- %</p>
+        </div>
+
+    </div>
+
+    <!-- 🔹 SMART RECOMMENDATION -->
+    <div id="recommendation" class="card recommendation-card">
+        <h3>🤖 Smart Suggestions</h3>
+        <p>Run prediction to get recommendations...</p>
+    </div>
+
+    <!-- 🔹 TABLE -->
+    <div class="card table-card">
+
+        <h3>Hourly Insights</h3>
+
+        <table id="priceTable">
+
+            <thead>
+                <tr>
+                    <th>Hour</th>
+                    <th>Price (₹)</th>
+                    <th>Demand</th>
+                    <th>Suggestion</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- Flask JS Linking -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
